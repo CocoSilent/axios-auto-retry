@@ -1,0 +1,32 @@
+{
+  "name": "axios-auto-retry",
+  "version": "1.0.0",
+  "description": "A plug-in that allows Axios to automatically retry",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CocoSilent/axios-auto-retry.git"
+  },
+  "keywords": [
+    "axios",
+    "retry",
+    "auto"
+  ],
+  "author": "silent",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CocoSilent/axios-auto-retry/issues"
+  },
+  "homepage": "https://github.com/CocoSilent/axios-auto-retry#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "peerDependencies": {
+    "axios": "^0.25.0"
+  }
+}
