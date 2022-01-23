@@ -12,6 +12,7 @@ export type RetryConfig = {
 }
 
 export type RetryState = {
+    // 当前重试次数
     count: number,
 }
 

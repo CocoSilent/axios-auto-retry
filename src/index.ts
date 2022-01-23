@@ -12,7 +12,7 @@ function whetherRetry(params: {
     const { retryConfig: { retryCount, retryConditionFulfilled, retryConditionRejected }, retryState, response, error } = params;
 
     let retry = false;
-    let currentRetryCount = retryState?.count || 0;
+    let currentRetryCount = retryState.count;
     if ( currentRetryCount < retryCount) {
         if (response) {
             retry = retryConditionFulfilled(response);
@@ -25,9 +25,9 @@ function whetherRetry(params: {
 
 function getDelay(retryConfig: RetryConfig, retryState: RetryState) {
     let delay = 0;
-    const retryStateCount = retryState.count || 0;
+    const currentRetryCount = retryState.count;
     if (retryConfig.retryDelay) {
-        delay = retryConfig.retryDelay(retryStateCount + 1);
+        delay = retryConfig.retryDelay(currentRetryCount + 1);
     }
     return delay;
 }
@@ -39,7 +39,7 @@ function axiosAutoRetry(instance: AxiosStatic | AxiosInstance , retryConfig: Ret
 
     instance.interceptors.response.use((response: AxiosResponse) => {
         const config = Object.assign(retryConfig, response.config.retryConfig);
-        const retryState = response.config.retryState;
+        const retryState = response.config.retryState || { count: 0 };
         const retry = whetherRetry({
             retryConfig: config,
             retryState,
@@ -47,6 +47,7 @@ function axiosAutoRetry(instance: AxiosStatic | AxiosInstance , retryConfig: Ret
         });
         if (retry) {
             retryState.count += 1;
+            response.config.retryState = retryState;
             const delay = getDelay(config, retryState);
             return sleep(delay).then(() => {
                 return instance(response.config);
@@ -58,7 +59,7 @@ function axiosAutoRetry(instance: AxiosStatic | AxiosInstance , retryConfig: Ret
             return Promise.reject(error);
         }
         const config = Object.assign(retryConfig, error.config.retryConfig);
-        const retryState = error.config.retryState;
+        const retryState = error.config.retryState || { count: 0 };
         const retry = whetherRetry({
             retryConfig: config,
             retryState,
@@ -66,6 +67,7 @@ function axiosAutoRetry(instance: AxiosStatic | AxiosInstance , retryConfig: Ret
         });
         if (retry) {
             retryState.count += 1;
+            error.config.retryState = retryState;
             const delay = getDelay(config, retryState);
             return sleep(delay).then(() => {
                 return instance(error.config);
