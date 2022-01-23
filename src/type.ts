@@ -7,7 +7,7 @@ export type RetryConfig = {
     retryConditionFulfilled: (response: AxiosResponse)=> boolean;
     // 请求失败的重试条件  即interceptors.onRejected, 返回true则重试
     retryConditionRejected: (error: any)=> boolean;
-    // 重试延迟时间 ms
+    // count为重试次数从1开始，返回重试延迟时间 ms
     retryDelay: (count: number) => number;
 }
 
