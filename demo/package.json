@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.25.0",
-    "axios-auto-retry": "^0.0.2"
+    "axios-auto-retry": "0.0.3"
   },
   "devDependencies": {
     "ts-node": "^10.4.0",
