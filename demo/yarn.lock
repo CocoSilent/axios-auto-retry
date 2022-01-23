@@ -49,10 +49,10 @@ arg@^4.1.0:
   resolved "https://registry.yarnpkg.com/arg/-/arg-4.1.3.tgz#269fc7ad5b8e42cb63c896d5666017261c144089"
   integrity sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==
 
-axios-auto-retry@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/axios-auto-retry/-/axios-auto-retry-0.0.1.tgz#daee1736e2b7da88e5f2f44f9295ef2c534fd9c4"
-  integrity sha512-kEh0h2rbf4gEMRrF+7XLZwGsxpg8PHwQY9L5PYjlvk+/h0uKKe81XjKsZGhomD/AgZGW3W5CTJEADgFFGijSVg==
+axios-auto-retry@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/axios-auto-retry/-/axios-auto-retry-0.0.2.tgz#5a1cf9abe335f7dcadf2facbebe80fcb24750624"
+  integrity sha512-JurXryqbaHUTZwnXRM8COwJnfVUSwg8h1HQ3QYHWXyhoOj3F5gYqm5FNyJB0OWx4eioM+HU6bylgrjQRWssKrg==
 
 axios@^0.25.0:
   version "0.25.0"
