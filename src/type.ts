@@ -18,7 +18,7 @@ export type RetryState = {
 
 declare module 'axios' {
     export interface AxiosRequestConfig {
-        retryConfig: RetryConfig,
-        retryState: RetryState
+        retryConfig?: RetryConfig,
+        retryState?: RetryState
     }
 }
