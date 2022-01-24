@@ -47,7 +47,7 @@ function axiosAutoRetry(instance: AxiosStatic | AxiosInstance , retryConfig: Ret
         });
         if (retry) {
             retryState.count += 1;
-            response.config.retryState = retryState;
+            response.config.retryState = {...retryState};
             const delay = getDelay(config, retryState);
             return sleep(delay).then(() => {
                 return instance(response.config);
@@ -67,7 +67,7 @@ function axiosAutoRetry(instance: AxiosStatic | AxiosInstance , retryConfig: Ret
         });
         if (retry) {
             retryState.count += 1;
-            error.config.retryState = retryState;
+            error.config.retryState = {...retryState};
             const delay = getDelay(config, retryState);
             return sleep(delay).then(() => {
                 return instance(error.config);
