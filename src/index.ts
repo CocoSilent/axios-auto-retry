@@ -38,19 +38,21 @@ function axiosAutoRetry(instance: AxiosStatic | AxiosInstance , retryConfig: Ret
     // (instance.interceptors.response as any).handlers.unshift  这个方法可以添加到第一个，但不是axios暴露出来的方法
 
     instance.interceptors.response.use((response: AxiosResponse) => {
-        const config = Object.assign(retryConfig, response.config.retryConfig);
+        const tmpRetryConfig = Object.assign(retryConfig, response.config.retryConfig);
         const retryState = response.config.retryState || { count: 0 };
         const retry = whetherRetry({
-            retryConfig: config,
+            retryConfig: tmpRetryConfig,
             retryState,
             response
         });
         if (retry) {
-            retryState.count += 1;
-            response.config.retryState = {...retryState};
-            const delay = getDelay(config, retryState);
+            const delay = getDelay(tmpRetryConfig, retryState);
+            const config = {...response.config}
+            config.retryState = {
+                count : retryState.count + 1
+            };
             return sleep(delay).then(() => {
-                return instance(response.config);
+                return instance(config);
             });
         }
         return response;
@@ -58,19 +60,21 @@ function axiosAutoRetry(instance: AxiosStatic | AxiosInstance , retryConfig: Ret
         if (!error?.config) {
             return Promise.reject(error);
         }
-        const config = Object.assign(retryConfig, error.config.retryConfig);
+        const tmpRetryConfig = Object.assign(retryConfig, error.config.retryConfig);
         const retryState = error.config.retryState || { count: 0 };
         const retry = whetherRetry({
-            retryConfig: config,
+            retryConfig: tmpRetryConfig,
             retryState,
             error,
         });
         if (retry) {
-            retryState.count += 1;
-            error.config.retryState = {...retryState};
-            const delay = getDelay(config, retryState);
+            const delay = getDelay(tmpRetryConfig, retryState);
+            const config = {...error.config}
+            config.retryState = {
+                count : retryState.count + 1
+            };
             return sleep(delay).then(() => {
-                return instance(error.config);
+                return instance(config);
             });
         }
         return Promise.reject(error);
