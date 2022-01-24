@@ -39,20 +39,20 @@ axiosAutoRetry(instance, {
         return false;
     },
     // count为重试次数从1开始，返回重试延迟时间 ms
-    retryDelay: (count: number) => count * 2000,
+    retryDelay: (count: number) => count * 1000,
 });
 
 instance.interceptors.response.use((response) => {
-    console.log('自已的成功拦截器')
+    console.log('自已的成功拦截器', response.config.retryState?.count);
     return response
 }, (error) => {
-    console.log('自已的失败拦截器')
+    console.log('自已的失败拦截器', error.config.retryState?.count)
     throw error
 })
 
 
 instance({
-    url: 'https://baidu.com'
+    url: 'https://baidu.com',
 }).then(res => {
     console.log(res.status);
 }).catch(error => {
